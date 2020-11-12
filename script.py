@@ -23,7 +23,7 @@ def acordoValido(acordo):
     valorParcela = float(acordo['ValorParcela'])
     numParcelas = float(acordo['ContratoPlano'])
     data = acordo['DataVencimento']
-    if(valorContrato == valorParcela * numParcelas and diaUtil(data)):
+    if((valorContrato == valorParcela * numParcelas) and diaUtil(data)):
         return True
     else:
         return False
@@ -39,6 +39,14 @@ def ehCNPJ(acordo):
 
 listaCPF = [x for x in listaDicionarios if ehCPF(x)]
 print(len(listaCPF))
+
 listaCNPJ = [x for x in listaDicionarios if ehCNPJ(x)]
 print(len(listaCNPJ))
+
 print(qtdAcordos(listaDicionarios))
+
+qtdAcordosInvalidos = 0
+for acordo in listaDicionarios:
+    if(not(acordoValido(acordo))):
+        qtdAcordosInvalidos += 1
+print(qtdAcordosInvalidos)
