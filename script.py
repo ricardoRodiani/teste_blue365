@@ -19,12 +19,19 @@ def diaUtil(stringData):
         return True
 
 
-def acordoValido(acordo):
+def valorAcordoValido(acordo):
     valorContrato = float(acordo['ValorContrato'])
     valorParcela = float(acordo['ValorParcela'])
     numParcelas = float(acordo['ContratoPlano'])
+    if(valorContrato == (valorParcela * numParcelas)):
+        return True
+    else:
+        return False
+
+
+def acordoValido(acordo):
     data = acordo['DataVencimento']
-    if((valorContrato == valorParcela * numParcelas) and diaUtil(data)):
+    if(valorAcordoValido(acordo) and diaUtil(data)):
         return True
     else:
         return False
@@ -57,22 +64,44 @@ def qtdAcordosInvalidos(listaDicionarios):
     for acordo in listaDicionarios:
         if(not(acordoValido(acordo))):
             qtdAcordosInvalidos += 1
-    
+
     return qtdAcordosInvalidos
+
 
 def qtdTotalAcordos(listaDicionarios):
     qtdReais = 0
     for acordo in listaDicionarios:
         qtdReais += float(acordo['ValorContrato'])
-    
+
     locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
     qtdReais = locale.currency(qtdReais, grouping=True, symbol=None)
     return qtdReais
 
 
-print("Foram gerados {qtd} acordos:".format(qtd = qtdAcordos(listaDicionarios)))
-print("{qtd} de CPF's".format(qtd = qtdCPF(listaDicionarios)))
-print("{qtd} de CNPJ's".format(qtd = qtdCNPJ(listaDicionarios)))
-print("{qtd} acordos são inválidos!".format(qtd = qtdAcordosInvalidos(listaDicionarios)))
+def invalidoPeloValor(listaDicionarios):
+    invalidos = 0
+    for acordo in listaDicionarios:
+        if(not(valorAcordoValido(acordo))):
+            invalidos += 1
+    return invalidos
+
+
+def invalidoPeloDia(listaDicionarios):
+    invalidos = 0
+    for acordo in listaDicionarios:
+        data = acordo['DataVencimento']
+        if(not(diaUtil(data))):
+            invalidos += 1
+    return invalidos
+
+
+print("Foram gerados {qtd} acordos:".format(qtd=qtdAcordos(listaDicionarios)))
+print("{qtd} de CPF's".format(qtd=qtdCPF(listaDicionarios)))
+print("{qtd} de CNPJ's".format(qtd=qtdCNPJ(listaDicionarios)))
+print("{qtd} acordos são inválidos!".format(
+    qtd=qtdAcordosInvalidos(listaDicionarios)))
 qtdTotalAcordos(listaDicionarios)
-print("Valor total de todos os acordos gerados: R$ {valor}".format(valor = qtdTotalAcordos(listaDicionarios)))
+print("Valor total de todos os acordos gerados: R$ {valor}".format(
+    valor=qtdTotalAcordos(listaDicionarios)))
+print("Acordos inválidos porque os valores estão incorretos: {qtd}".format(qtd = invalidoPeloValor(listaDicionarios)))
+print("Acordos inválidos porque o dia da data de vencimento não é útil: {qtd}".format(qtd = invalidoPeloDia(listaDicionarios)))
