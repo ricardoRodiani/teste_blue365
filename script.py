@@ -1,16 +1,20 @@
-# Vamos utilizar as bibliotecas csv para lidar com o arquivo csv e fazer o parser apropiado
+# Vamos utilizar a biblioteca csv para lidar com o arquivo csv e fazer o parser apropiado
 import csv
+
 # Import datetime para lidar com as datas
 from datetime import datetime
+
+# Import local para lidar com moeda em Reais
 import locale
 
-# Funcao que le o csv e converte em funcao lista de dicionarios, onde cada dicionario representa um acordo
+# Trecho que le o csv e converte em uma lista de dicionarios, onde cada dicionario representa um acordo
 with open('teste.csv') as csvfile:
     reader = csv.DictReader(csvfile, delimiter="|")
+    listaDicionarios = []
     for row in reader:
-        listaDicionarios = list(reader)
+        listaDicionarios.append(row)
 
-
+# Recebe uma stringData e retorna se o dia da mesma é util ou não
 def diaUtil(stringData):
     date = datetime.strptime(stringData, '%Y-%m-%d').date()
     if(date.weekday() == 6 or date.weekday() == 7):
@@ -103,5 +107,7 @@ print("{qtd} acordos são inválidos!".format(
 qtdTotalAcordos(listaDicionarios)
 print("Valor total de todos os acordos gerados: R$ {valor}".format(
     valor=qtdTotalAcordos(listaDicionarios)))
-print("Acordos inválidos porque os valores estão incorretos: {qtd}".format(qtd = invalidoPeloValor(listaDicionarios)))
-print("Acordos inválidos porque o dia da data de vencimento não é útil: {qtd}".format(qtd = invalidoPeloDia(listaDicionarios)))
+print("Acordos inválidos porque os valores estão incorretos: {qtd}".format(
+    qtd=invalidoPeloValor(listaDicionarios)))
+print("Acordos inválidos porque o dia da data de vencimento não é útil: {qtd}".format(
+    qtd=invalidoPeloDia(listaDicionarios)))
