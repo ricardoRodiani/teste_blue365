@@ -1,14 +1,12 @@
-# Project Title
+# Desafio blu365
 
 Script para o desafio da blu365
 
-## Getting Started
-
-### Dependencies
+### Dependencias
 
 * Python3
 
-### Executing program
+### Executando o script
 
 * baixe o zip ou clone o repositório
 * navegue até a pasta pelo terminal usando cd/
