@@ -17,7 +17,7 @@ with open('teste.csv') as csvfile:
 # Recebe uma stringData e retorna se o dia da mesma é util ou não
 def diaUtil(stringData):
     date = datetime.strptime(stringData, '%Y-%m-%d').date()
-    if(date.weekday() == 6 or date.weekday() == 7):
+    if(date.weekday() == 5 or date.weekday() == 6):
         return False
     else:
         return True
