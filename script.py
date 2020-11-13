@@ -8,7 +8,7 @@ from datetime import datetime
 import locale
 
 # Trecho que le o csv e converte em uma lista de dicionarios, onde cada dicionario representa um acordo
-with open('teste.csv', 'r') as csvfile:
+with open('teste.csv') as csvfile:
     reader = csv.DictReader(csvfile, delimiter="|")
     listaDicionarios = []
     for row in reader:
