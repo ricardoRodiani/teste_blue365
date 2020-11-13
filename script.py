@@ -8,7 +8,7 @@ from datetime import datetime
 import locale
 
 # Trecho que le o csv e converte em uma lista de dicionarios, onde cada dicionario representa um acordo
-with open('teste.csv') as csvfile:
+with open('teste.csv', 'r') as csvfile:
     reader = csv.DictReader(csvfile, delimiter="|")
     listaDicionarios = []
     for row in reader:
@@ -52,12 +52,13 @@ def ehCPF(acordo):
 def ehCNPJ(acordo):
     return len(acordo['documento']) == 14
 
-
+# Pega cada acordo da lista e verifica se os valores que estao na coluna de "documento" representam um cpf, retorna essa nova lista no final
 def qtdCPF(listaDicionarios):
     listaCPF = [x for x in listaDicionarios if ehCPF(x)]
     return len(listaCPF)
 
 
+# Pega cada acordo da lista e verifica se os valores que estao na coluna de "documento" representam um cnpj, retorna essa nova lista no final
 def qtdCNPJ(listaDicionarios):
     listaCNPJ = [x for x in listaDicionarios if ehCNPJ(x)]
     return len(listaCNPJ)
@@ -72,6 +73,7 @@ def qtdAcordosInvalidos(listaDicionarios):
     return qtdAcordosInvalidos
 
 
+# Usa biblioteca locale para transfomar um valor em uma string formatada para Reais
 def qtdTotalAcordos(listaDicionarios):
     qtdReais = 0
     for acordo in listaDicionarios:
@@ -105,9 +107,9 @@ print("{qtd} de CNPJ's".format(qtd=qtdCNPJ(listaDicionarios)))
 print("{qtd} acordos são inválidos!".format(
     qtd=qtdAcordosInvalidos(listaDicionarios)))
 qtdTotalAcordos(listaDicionarios)
-print("Valor total de todos os acordos gerados: R$ {valor}".format(
-    valor=qtdTotalAcordos(listaDicionarios)))
 print("Acordos inválidos porque os valores estão incorretos: {qtd}".format(
     qtd=invalidoPeloValor(listaDicionarios)))
 print("Acordos inválidos porque o dia da data de vencimento não é útil: {qtd}".format(
     qtd=invalidoPeloDia(listaDicionarios)))
+print("Valor total de todos os acordos gerados: R$ {valor}".format(
+    valor=qtdTotalAcordos(listaDicionarios)))
