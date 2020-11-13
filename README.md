@@ -4,7 +4,7 @@ Script para o desafio da blu365
 
 ### Dependencias
 
-* Python3
+* Python3+
 
 ### Executando o script pelo terminal
 * baixe o zip ou clone o repositório
